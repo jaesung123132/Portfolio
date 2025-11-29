@@ -1,0 +1,554 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    background: #050509;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Pretendard", "SF Pro Text", sans-serif;
+    color: #fff;
+}
+
+.book-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    perspective: 1200px;
+    background: radial-gradient(circle at top, #202637 0, #050509 60%);
+}
+
+
+#book {
+    position: relative;
+    width: min(95vw, 1500px);
+    height: min(90vh, 850px);
+    overflow: visible;
+}
+
+/* 페이지 (카드) 공통 스타일 */
+.page {
+    position: absolute;
+    inset: 0;
+    border-radius: 18px;
+    background: linear-gradient(135deg, #090c14, #1b2333);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    transition: transform 0.5s cubic-bezier(0.4, 0.0, 0.2, 1),
+        opacity 0.5s,
+        box-shadow 0.5s,
+        filter 0.5s;
+
+    /* 기본 상태 */
+    transform-origin: center center;
+    backface-visibility: hidden;
+}
+
+/* 내부 컨텐츠 레이아웃 */
+.page-inner {
+    width: 100%;
+    height: 100%;
+    padding: 20px 80px 50px 80px;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 18px;
+}
+
+/* 프로필 그리드 등 기존 스타일 유지 */
+.profile-grid {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    grid-template-columns: 1fr 320px 1fr;
+    grid-template-rows: 1fr 320px 1fr;
+
+    place-items: center;
+    position: relative;
+
+    padding: 40px 100px;
+}
+
+.profile-image {
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+}
+
+.profile-image img {
+    width: 260px;
+    height: 260px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center top;
+    border: 5px solid rgba(255, 255, 255, 0.25);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+}
+
+.box {
+    width: min(360px, 26vw);
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(8px);
+    border-radius: 14px;
+    font-size: 16px;
+    line-height: 1.6;
+    position: relative;
+    /* 점선 연결에 필요 */
+}
+
+
+.top-left {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+.top-left::after {
+    content: "";
+    position: absolute;
+    right: -40px;
+    bottom: -40px;
+    width: 40px;
+    height: 40px;
+    border-right: 2px dotted rgba(255, 255, 255, 0.4);
+    border-bottom: 2px dotted rgba(255, 255, 255, 0.4);
+}
+
+
+.top-right {
+    grid-column: 3;
+    grid-row: 1;
+}
+
+.top-right::after {
+    content: "";
+    position: absolute;
+    left: -40px;
+    bottom: -40px;
+    width: 40px;
+    height: 40px;
+    border-left: 2px dotted rgba(255, 255, 255, 0.4);
+    border-bottom: 2px dotted rgba(255, 255, 255, 0.4);
+}
+
+
+.bottom-left {
+    grid-column: 1;
+    grid-row: 3;
+}
+
+.bottom-left::after {
+    content: "";
+    position: absolute;
+    right: -40px;
+    top: -40px;
+    width: 40px;
+    height: 40px;
+    border-right: 2px dotted rgba(255, 255, 255, 0.4);
+    border-top: 2px dotted rgba(255, 255, 255, 0.4);
+}
+
+
+.bottom-right {
+    grid-column: 3;
+    grid-row: 3;
+}
+
+.bottom-right::after {
+    content: "";
+    position: absolute;
+    left: -40px;
+    top: -40px;
+    width: 40px;
+    height: 40px;
+    border-left: 2px dotted rgba(255, 255, 255, 0.4);
+    border-top: 2px dotted rgba(255, 255, 255, 0.4);
+}
+
+
+.page:nth-of-type(1) {
+    background: radial-gradient(circle at 20% 0%, rgba(255, 255, 255, 0.15), transparent 55%),
+        linear-gradient(135deg, #050509 0%, #151522 50%, #050509 100%);
+}
+
+/* 2번 페이지 */
+.page:nth-of-type(2) {
+    background: radial-gradient(circle at 80% 0%, rgba(255, 255, 255, 0.12), transparent 55%),
+        linear-gradient(135deg, #040814 0%, #182133 50%, #040814 100%);
+}
+
+
+.page:nth-of-type(3n + 3) {
+    background: radial-gradient(circle at 0% 50%, rgba(255, 255, 255, 0.12), transparent 55%),
+        linear-gradient(135deg, #030711 0%, #1b2638 50%, #030711 100%);
+}
+
+.page:nth-of-type(3n + 4) {
+    background: radial-gradient(circle at 100% 50%, rgba(255, 255, 255, 0.12), transparent 55%),
+        linear-gradient(135deg, #050509 0%, #20293a 50%, #050509 100%);
+}
+
+/* 타이포그래피 */
+.page-inner h1 {
+    font-size: 3rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.page-inner p {
+    font-size: 0.98rem;
+    line-height: 1.7;
+    opacity: 0.82;
+}
+
+.page-inner h2 {
+    font-size: 2.1rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    opacity: 0.9;
+}
+
+.page-inner h3 {
+    font-size: 1.4rem;
+    opacity: 0.9;
+}
+
+a {
+    text-decoration: none;
+    color: snow;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* 반응형 */
+@media (max-width: 900px) {
+    #book {
+        aspect-ratio: 3 / 4;
+        width: 95vw;
+    }
+}
+
+@media (max-aspect-ratio: 3/4) {
+    .profile-grid {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        padding: 30px;
+    }
+
+    .profile-grid .box {
+        width: 90%;
+        text-align: center;
+        position: static;
+    }
+
+    .profile-image {
+        order: -1;
+        margin-bottom: 20px;
+    }
+
+    .profile-image img {
+        width: 180px;
+        height: 180px;
+    }
+}
+
+@media (orientation: portrait) {
+    #book {
+        width: 95vw;
+        height: 88vh;
+        aspect-ratio: 3 / 4;
+    }
+
+    .page {
+        height: 100%;
+        min-height: 100%;
+    }
+
+    .profile-grid {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: auto;
+        padding: 20px;
+        gap: 18px;
+    }
+
+    .profile-image {
+        order: -1;
+    }
+
+    .profile-image img {
+        width: 180px;
+        height: 180px;
+        object-position: center 10%;
+    }
+
+    .profile-grid .box {
+        width: 90%;
+        max-width: 360px;
+        text-align: center;
+        position: static;
+    }
+}
+
+/* UI 요소 */
+.page-indicator {
+    position: absolute;
+    right: 6%;
+    bottom: 6%;
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 0.85rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    pointer-events: none;
+}
+
+.scroll-hint {
+    position: absolute;
+    left: 6%;
+    bottom: 6%;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: rgba(255, 255, 255, 0.55);
+}
+
+.admin-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 8px 15px;
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 6px;
+    backdrop-filter: blur(6px);
+    cursor: pointer;
+    font-size: 14px;
+    z-index: 9999;
+    transition: 0.25s;
+}
+
+.admin-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+
+.project-slider {
+    position: relative;
+    width: 100%;
+    margin: 0 auto;
+    overflow: hidden;
+    border-radius: 16px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.35);
+    background: #00000022;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.slider-track img {
+    width: 100%;
+    height: 450px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 16px;
+    display: none;
+    /* 기본적으로 숨김 */
+    transition: opacity 0.3s ease;
+}
+
+/* 현재 보이는 이미지 */
+.slider-track img.active {
+    display: block;
+}
+
+.slider-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: rgba(21, 26, 71, 0.12);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    backdrop-filter: blur(6px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: 0.25s ease;
+    opacity: 0;
+    /* 기본은 안 보이게 */
+    pointer-events: none;
+    /* hover 전 클릭 불가 */
+    font-size: 18px;
+}
+
+.project-slider:hover .slider-btn {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.slider-btn:hover {
+    background: rgba(37, 34, 80, 0.35);
+    border-color: rgba(255, 255, 255, 0.7);
+    transform: translateY(-50%) scale(1.12);
+}
+
+.slider-btn.prev {
+    left: 12px;
+}
+
+.slider-btn.next {
+    right: 12px;
+}
+
+
+.project-summary-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 1;
+}
+
+/* ▼ 버튼 */
+.toggle-detail-btn {
+    background: rgba(255, 255, 255, 0.12);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.25s ease;
+    backdrop-filter: blur(6px);
+    z-index: 3;
+}
+
+.toggle-detail-btn:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: scale(1.05);
+}
+
+.project-detail-overlay {
+    position: absolute;
+    top: 110%;
+    /* summary 바로 아래에 붙이고 */
+    left: 0;
+    width: 100%;
+    padding: 22px 20px;
+
+    background: rgba(20, 20, 30, 0.75);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 12px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+
+    opacity: 0;
+    transform: translateY(-6px);
+    pointer-events: none;
+
+    transition: opacity 0.35s ease, transform 0.35s ease;
+    z-index: 2;
+}
+
+/* 활성화될 때 */
+.project-detail-overlay.active {
+    opacity: 1;
+    transform: translateY(0px);
+    pointer-events: auto;
+}
+
+.project-detail-overlay h4 {
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+    opacity: 0.95;
+}
+
+.project-detail-overlay p {
+    opacity: 0.85;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+/* 관리자 전용 버튼 우측 하단 고정 */
+.admin-control {
+    position: absolute;
+    bottom: 24px;
+    right: 30px;
+
+    display: flex;
+    gap: 10px;
+
+    z-index: 20;
+    /* 이미지, 텍스트 위로 올라오게 */
+}
+
+.edit-btn,
+.delete-btn {
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    text-decoration: none;
+
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    transition: 0.25s;
+
+    backdrop-filter: blur(8px);
+}
+
+.edit-btn:hover {
+    background: rgba(80, 180, 255, 0.35);
+}
+
+.delete-btn:hover {
+    background: rgba(255, 70, 70, 0.35);
+}
+
+.arrow .animation {
+    display: block;
+    animation: arrowMove 1.4s infinite ease-in-out;
+}
+
+/* 위–아래로 부드럽게 움직이는 애니메이션 */
+@keyframes arrowMove {
+    0% {
+        transform: translateY(0px);
+        opacity: 0.7;
+    }
+
+    50% {
+        transform: translateY(8px);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(0px);
+        opacity: 0.7;
+    }
+}

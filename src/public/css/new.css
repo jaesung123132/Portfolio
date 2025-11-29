@@ -1,0 +1,203 @@
+/* ===========================
+   기본 레이아웃 — 가로 화면 기준 전체 디자인
+   =========================== */
+
+body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(180deg, #0f1624 0%, #111827 100%);
+    font-family: 'Noto Sans KR', sans-serif;
+    color: #e5e7eb;
+
+    /* 가장 중요한 요소 (스크롤 활성화) */
+    height: auto !important;
+    overflow-y: auto !important;
+}
+
+/* 페이지 전체 wrapper */
+.page-wrapper {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+
+    /* 아래 및 위 여백 넉넉히 */
+    padding: 50px 0 80px 0;
+}
+
+
+
+/* ===========================
+   폼 카드 스타일
+   =========================== */
+
+.form-card {
+    width: 75%;
+    max-width: 950px;
+
+    background: rgba(44, 52, 70, 0.45);
+    backdrop-filter: blur(10px);
+
+    border-radius: 22px;
+    padding: 30px 40px 50px 40px;
+
+    box-shadow: 0 0 28px rgba(0, 0, 0, 0.45),
+        inset 0 0 8px rgba(255, 255, 255, 0.05);
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+
+
+/* ===========================
+   타이틀
+   =========================== */
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #d1d5db;
+    letter-spacing: 1px;
+    font-weight: 700;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.15);
+}
+
+
+
+/* ===========================
+   입력 그룹
+   =========================== */
+
+.form-group {
+    margin-bottom: 28px;
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #cbd5e1;
+}
+
+
+
+/* ===========================
+   Input / Textarea / Select
+   =========================== */
+
+input[type="text"],
+input[type="url"],
+textarea,
+select {
+    padding: 8px 10px;
+    font-size: 14px;
+
+    background: rgba(17, 24, 39, 0.75);
+    color: #e5e7eb;
+
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+
+    transition: all 0.2s ease;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 70px;
+    padding: 8px 10px;
+    font-size: 14px;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    border-color: #60a5fa;
+    box-shadow: 0 0 6px rgba(96, 165, 250, 0.45);
+}
+
+
+
+/* ===========================
+   파일 업로드
+   =========================== */
+
+input[type="file"] {
+    margin-top: 8px;
+    background: rgba(30, 41, 59, 0.75);
+
+    padding: 12px;
+    border-radius: 12px;
+
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #e5e7eb;
+}
+
+
+
+/* ===========================
+            제출 버튼
+   =========================== */
+
+.submit-btn {
+    width: 100%;
+    padding: 12px;
+
+    margin-top: 18px;
+
+    background: #3b82f6;
+    border: none;
+    border-radius: 14px;
+
+    cursor: pointer;
+
+    font-size: 15px;
+    font-weight: 700;
+    color: white;
+
+    transition: 0.25s;
+    box-shadow: 0 0 10px rgba(59, 130, 246, 0.45);
+}
+
+.submit-btn:hover {
+    background: #2563eb;
+    box-shadow: 0 0 12px rgba(59, 130, 246, 0.6);
+}
+
+
+
+/* ===========================
+       관리자 페이지 돌아가기
+   =========================== */
+
+.back-btn {
+    margin-top: 10px;
+    display: inline-block;
+    color: #9ca3af;
+    font-size: 13px;
+}
+
+.back-btn:hover {
+    color: #e5e7eb;
+}
+
+
+
+/* ===========================
+         모바일(세로) 대응
+   =========================== */
+@media (max-width: 899px) {
+    .page-wrapper {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0;
+    }
+
+    .form-card {
+        width: 90%;
+        padding: 30px 30px 60px 30px;
+    }
+}

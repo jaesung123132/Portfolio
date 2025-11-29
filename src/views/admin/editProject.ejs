@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>프로젝트 수정</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/new.css">
+
+</head>
+
+<body>
+
+    <div class="page-wrapper">
+        <div class="form-card">
+
+            <h1>프로젝트 수정</h1>
+            <form action="/admin0915/edit/<%= project.project_id %>" method="POST">
+
+                <div class="form-group">
+                    <label>프로젝트명</label>
+                    <input type="text" name="title" value="<%= project.title %>" required>
+                </div>
+
+                <div class="form-group">
+                    <label>요약</label>
+                    <input type="text" name="summary" value="<%= project.summary %>" required>
+                </div>
+
+                <div class="form-group">
+                    <label>상세 설명</label>
+                    <textarea name="description"><%= project.description %></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>기술 스택</label>
+                    <input type="text" name="tech_stack" value="<%= project.tech_stack %>">
+                </div>
+
+                <div class="form-group">
+                    <label>GitHub URL</label>
+                    <input type="url" name="github_url" value="<%= project.github_url %>">
+                </div>
+
+                <div class="form-group">
+                    <label>배포 URL</label>
+                    <input type="url" name="deploy_url" value="<%= project.deploy_url %>">
+                </div>
+
+                <div class="form-group">
+                    <label>준비 여부</label>
+                    <select name="is_ready">
+                        <option value="1" <%=project.is_ready ? 'selected' : '' %>>준비됨</option>
+                        <option value="0" <%=!project.is_ready ? 'selected' : '' %>>준비중</option>
+                    </select>
+                </div>
+
+                <button class="submit-btn">수정 완료</button>
+
+            </form>
+
+
+            <a href="/admin0915" class="back-btn">← 관리자 페이지로 돌아가기</a>
+
+        </div>
+    </div>
+
+</body>
+
+</html>

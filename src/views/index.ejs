@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LJS Portfolio – Page Flip</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+    <div class="book-wrapper">
+
+        <% if (isAdmin) { %>
+            <a href="/admin0915/new" class="admin-btn">프로젝트 등록</a>
+            <% } %>
+
+                <div id="book">
+
+                    <section class="page page-1">
+                        <div class="page-inner">
+                            <h1>LJS Portfolio</h1>
+                            <p class="arrow">
+                                <span class="animation">스크롤해서 넘겨보세요 ↓</span>
+                            </p>
+                        </div>
+                    </section>
+
+                    <section class="page page-2">
+                        <div class="profile-grid">
+
+                            <div class="box top-left">
+                                <h3>information</h3>
+                                <p>이재성 (LJS)<br>인하공업전문대학교 컴퓨터시스템공학과</p>
+                            </div>
+
+                            <div class="box top-right">
+                                <h3>skills</h3>
+                                <p>Node.js, MySQL, Java<br>C++, AWS(EC2), Algorithm</p>
+                            </div>
+
+                            <div class="box bottom-left">
+                                <h3>Links</h3>
+                                <p>
+                                    <a href="https://github.com/jaesung123132" target="_blank">GitHub</a><br>
+                                    <a href="https://solved.ac/profile/leejs3625" target="_blank">Solved.ac</a>
+                                </p>
+                            </div>
+
+                            <div class="box bottom-right">
+                                <h3>about me</h3>
+                                <p>
+                                    꾸준히 성장하는 개발자입니다.<br>
+                                    문제 해결과 백엔드 구축에 관심이 많습니다.
+                                </p>
+                            </div>
+
+                            <div class="profile-image">
+                                <img src="/images/profile.jpg" alt="profile">
+                            </div>
+
+                        </div>
+                    </section>
+                    <% projects.forEach((p, idx)=> { %>
+                        <section class="page page-<%= idx + 3 %>">
+                            <div class="page-inner">
+
+                                <div class="project-slider" data-project="<%= p.project_id %>">
+                                    <% if (p.images && p.images.length> 0) { %>
+
+                                        <div class="slider-track">
+                                            <% p.images.forEach((img, i)=> { %>
+                                                <img src="<%= img.image_url %>" class="<%= i === 0 ? 'active' : '' %>">
+                                                <% }) %>
+                                        </div>
+
+                                        <button class="slider-btn prev">❮</button>
+                                        <button class="slider-btn next">❯</button>
+
+                                        <% } else { %>
+                                            <p style="opacity: 0.7;">등록된 이미지가 없습니다.</p>
+                                            <% } %>
+                                </div>
+
+                                <h2>Project <%= (idx + 1).toString().padStart(2, '0' ) %>
+                                </h2>
+                                <h3>
+                                    <%= p.title %>
+                                </h3>
+                                <div class="project-summary-box">
+                                    <p class="summary-text">
+                                        <%= p.summary %>
+                                    </p>
+                                    <button class="toggle-detail-btn">▼</button>
+                                    <div class="project-detail-overlay">
+                                        <h4>상세 설명</h4>
+                                        <p>
+                                            <%= p.description %>
+                                        </p>
+                                    </div>
+                                </div>
+
+
+                                <p>
+                                    <% if (p.is_ready) { %>
+                                        <a href="<%= p.deploy_url %>" target="_blank">실행 사이트 / 실행 영상</a>
+                                        <% } else { %>
+                                            <a href="/coming-soon">실행 사이트 / 실행 영상</a>
+                                            <% } %>
+                                </p>
+
+                                <p>
+                                    <a href="<%= p.github_url %>" target="_blank">GitHub 보기</a>
+                                </p>
+
+                            </div>
+
+                            <% if (isAdmin) { %>
+                                <div class="admin-control">
+                                    <a href="/admin0915/edit/<%= p.project_id %>" class="edit-btn">수정</a>
+                                    <a href="/admin0915/delete/<%= p.project_id %>" class="delete-btn"
+                                        onclick="return confirm('정말 삭제하시겠습니까?');">삭제</a>
+                                </div>
+                                <% } %>
+                        </section>
+                        <% }) %>
+                </div>
+
+                <div class="page-indicator">
+                    <span id="page-current">1</span>
+                    <span class="slash">/</span>
+                    <span id="page-total">
+                        <%= projects.length + 2 %>
+                    </span>
+                </div>
+
+                <div class="scroll-hint">
+                    Scroll or Swipe
+                </div>
+    </div>
+
+    <script src="/js/pageFlip.js"></script>
+</body>
+
+</html>
